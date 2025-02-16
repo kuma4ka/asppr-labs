@@ -6,7 +6,7 @@
     <title>Розв'язання матричних задач</title>
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.5.0/math.min.js"></script>
-    <script defer src="script.js"></script>
+    <script type="module" src="main.js"></script>
 </head>
 <body>
 
@@ -38,9 +38,9 @@
     </section>
 
     <section class="buttons-container">
-        <button onclick="calculateInverse()">Знайти обернену матрицю</button>
-        <button onclick="calculateRank()">Знайти ранг матриці</button>
-        <button onclick="solveByInverse()">Розв'язати СЛАР (обернена матриця)</button>
+        <button id="inverse-btn">Знайти обернену матрицю</button>
+        <button id="rank-btn">Знайти ранг матриці</button>
+        <button id="solve-btn">Розв'язати СЛАР (обернена матриця)</button>
         <button id="downloadProtocolBtn">Завантажити протокол</button>
     </section>
 
