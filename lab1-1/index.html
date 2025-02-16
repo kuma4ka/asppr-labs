@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Розв'язання матричних задач</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.5.0/math.min.js"></script>
+    <script defer src="script.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <h2>Розрахунок матричних операцій</h2>
+
+    <label for="matrixSize">Розмірність матриці:</label>
+    <select id="matrixSize" disabled>
+        <option value="3x3" selected>3×3</option>
+    </select>
+
+    <section class="matrix-container">
+        <div>
+            <h3>Матриця A:</h3>
+            <table id="matrixA"></table>
+        </div>
+        <div>
+            <h3>Матриця B:</h3>
+            <table id="matrixB"></table>
+        </div>
+    </section>
+
+    <section class="buttons-container">
+        <button onclick="calculateInverse()">Знайти обернену матрицю</button>
+        <button onclick="calculateRank()">Знайти ранг матриці</button>
+        <button onclick="solveByInverse()">Розв'язати СЛАР (обернена матриця)</button>
+    </section>
+
+    <h3>Результати обчислень:</h3>
+    <div id="output"></div>
+</div>
+
+</body>
+</html>
