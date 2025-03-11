@@ -51,11 +51,11 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         if (useVariant20 && rows === 3 && cols === 3) {
-            // Variant 20: A = [ [1, -3, 1], [3, 1, -2], [2, -3, 3] ]
+            // Variant 20: A = [ [-1, 3, -2], [3, -1, 3], [1, 2, -3] ]
             const defaultA = [
-                [1, -3, 1],
-                [3,  1, -2],
-                [2, -3, 3]
+                [-1, 3, -2],
+                [3,  -1, 3],
+                [1, 2, -3]
             ];
             for (let i = 0; i < 3; i++) {
                 for (let j = 0; j < 3; j++) {
