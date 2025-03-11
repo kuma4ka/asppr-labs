@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Калькулятор матриць – Варіант 20</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<h1>Калькулятор матриць – Варіант 20</h1>
+<div id="controls">
+  <div>
+    <label for="operation">Оберіть операцію:</label>
+    <select id="operation">
+      <option value="inverse">Знайти обернену матрицю</option>
+      <option value="rank">Обчислити ранг матриці</option>
+      <option value="solve">Розв'язати систему (AX = B)</option>
+    </select>
+  </div>
+  <br/>
+  <div id="matrixSizeInputs">
+    <label for="rows">Кількість рядків (A):</label>
+    <input type="number" id="rows" min="1" value="3">
+    <label for="cols">Кількість стовпців (A):</label>
+    <input type="number" id="cols" min="1" value="3">
+  </div>
+  <br/>
+  <div>
+    <input type="checkbox" id="useVariant20">
+    <label for="useVariant20">Використати варіант 20 (3×3)</label>
+  </div>
+  <br/>
+  <button id="generateMatrix">Згенерувати матрицю</button>
+  <button id="generateRandomValues">Згенерувати випадкові значення</button>
+  <button id="calculate">Обчислити</button>
+</div>
+
+<div id="inputArea">
+  <h2>Матриця A:</h2>
+  <div id="matrixA"></div>
+  <div id="vectorBSection" style="display: none;">
+    <h2>Вектор B:</h2>
+    <div id="vectorB"></div>
+  </div>
+</div>
+
+<div id="results">
+  <h2>Результат:</h2>
+  <pre id="resultOutput"></pre>
+  <h2>Протокол обчислень:</h2>
+  <pre id="protocolOutput"></pre>
+</div>
+
+<script src="js/script.js"></script>
+</body>
+</html>
