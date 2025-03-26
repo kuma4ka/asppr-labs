@@ -7,36 +7,34 @@
 </head>
 <body>
 <h1>Калькулятор матриць – Варіант 20</h1>
+
 <div id="controls">
-  <div>
+  <div class="matrix-operations">
     <label for="operation">Оберіть операцію:</label>
     <select id="operation">
       <option value="inverse">Знайти обернену матрицю</option>
       <option value="rank">Обчислити ранг матриці</option>
-      <option value="solve">Розв'язати систему (Ax - B = 0)</option>
+      <option value="solve">Розв'язати систему (AX = B)</option>
     </select>
   </div>
-  <br/>
-  <div id="matrixSizeInputs">
-    <label for="rows">Кількість рядків (A):</label>
+  <div class="matrix-options">
+    <label for="rows">Рядки:</label>
     <input type="number" id="rows" min="1" value="3">
-    <label for="cols">Кількість стовпців (A):</label>
+    <label for="cols">Стовпці:</label>
     <input type="number" id="cols" min="1" value="3">
   </div>
-  <br/>
-  <div>
-    <input type="checkbox" id="useVariant20">
-    <label for="useVariant20">Використати варіант 20 (3×3)</label>
+  <div class="buttons">
+    <button id="generateMatrix">Згенерувати матрицю</button>
+    <button id="generateVariantMatrix">Матриця за варіантом</button>
+    <button id="calculate">Обчислити</button>
   </div>
-  <br/>
-  <button id="generateMatrix">Згенерувати матрицю</button>
-  <button id="generateRandomValues">Згенерувати випадкові значення</button>
-  <button id="calculate">Обчислити</button>
 </div>
 
 <div id="inputArea">
-  <h2>Матриця A:</h2>
-  <div id="matrixA"></div>
+  <div class="vectorASection">
+    <h2>Матриця A:</h2>
+    <div id="matrixA"></div>
+  </div>
   <div id="vectorBSection" style="display: none;">
     <h2>Вектор B:</h2>
     <div id="vectorB"></div>
@@ -44,12 +42,16 @@
 </div>
 
 <div id="results">
-  <h2>Результат:</h2>
-  <pre id="resultOutput"></pre>
-  <h2>Протокол обчислень:</h2>
-  <pre id="protocolOutput"></pre>
+  <div class="result">
+    <h2>Результат:</h2>
+    <pre id="resultOutput"></pre>
+  </div>
+  <div class="protocol">
+    <h2>Протокол обчислень:</h2>
+    <pre id="protocolOutput"></pre>
+  </div>
 </div>
 
-<script type="module" src="js/script.js"></script>
+<script type="module" src="./js/script.js"></script>
 </body>
 </html>
