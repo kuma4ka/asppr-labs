@@ -1,6 +1,19 @@
 import { generateProtocolHeader, generateStepProtocol, generateFinalMatrix, generateFinalVector } from "./protocolGenerator.js";
 
+function validateMatrix(A) {
+    return !(!Array.isArray(A) || A.length === 0 || !A.every(row => Array.isArray(row) && row.length === A[0].length));
+
+}
+
 export function calculateInverse(A) {
+    if (!A || A.length === 0 || A.every(row => row.every(value => value === 0))) {
+        return { error: "Матриця A пуста або заповнена нулями!" };
+    }
+
+    if (A.some(row => row.length !== A.length)) {
+        return { error: "Рядки та стовпці матриці мають бути однакової довжини!" };
+    }
+
     let n = A.length;
     let inv = Array.from({ length: n }, (_, i) =>
         Array.from({ length: n }, (_, j) => (i === j ? 1 : 0))
@@ -37,6 +50,14 @@ export function calculateInverse(A) {
 }
 
 export function calculateRank(A) {
+    if (!A || A.length === 0 || A.every(row => row.every(value => value === 0))) {
+        return { error: "Матриця A пуста або заповнена нулями!" };
+    }
+
+    if (A.some(row => row.length !== A.length)) {
+        return { error: "Рядки та стовпці матриці мають бути однакової довжини!" };
+    }
+
     let rank = 0;
     let protocol = generateProtocolHeader("rank", A);
     let m = A.length, n = A[0].length;
@@ -51,6 +72,14 @@ export function calculateRank(A) {
 }
 
 export function solveSystem(A, B) {
+    if (!A || !B || A.length === 0 || B.length !== A.length || A.every(row => row.every(value => value === 0)) || B.every(value => value === 0)) {
+        return { error: "Матриці A або B пуста або заповнена нулями!" };
+    }
+
+    if (A.some(row => row.length !== A.length)) {
+        return { error: "Рядки та стовпці матриці A мають бути однакової довжини!" };
+    }
+
     let n = A.length;
     let aug = A.map((row, i) => [...row, B[i]]);
     let protocol = generateProtocolHeader("solve", A, B);

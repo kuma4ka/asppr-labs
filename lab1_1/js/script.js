@@ -109,19 +109,51 @@ function calculate() {
     const A = getMatrixA();
     let resultText = "", protocolText = "";
 
+    if (A.some(row => row.some(value => isNaN(value) || value === ""))) {
+        resultText = "Будь ласка, заповніть всі поля матриці A.";
+        document.getElementById("resultOutput").textContent = resultText;
+        document.getElementById("protocolOutput").textContent = "";
+        return;
+    }
+
+    let B = [];
+    if (operation === "solve") {
+        B = getVectorB();
+        if (B.some(value => isNaN(value) || value === "")) {
+            resultText = "Будь ласка, заповніть всі поля вектору B.";
+            document.getElementById("resultOutput").textContent = resultText;
+            document.getElementById("protocolOutput").textContent = "";
+            return;
+        }
+    }
+
     if (operation === "inverse") {
-        let { inverse, protocol } = calculateInverse(A);
-        protocolText = protocol;
-        resultText = inverse ? "Обернена матриця:\n" + inverse.map(row => row.join("\t")).join("\n") : "Матриця є виродженою.";
+        let { inverse, protocol, error } = calculateInverse(A);
+        if (error) {
+            resultText = error;
+            protocolText = "";
+        } else {
+            protocolText = protocol;
+            resultText = inverse ? "Обернена матриця:\n" + inverse.map(row => row.join("\t")).join("\n") : "Матриця є виродженою.";
+        }
     } else if (operation === "rank") {
-        let { rank, protocol } = calculateRank(A);
-        protocolText = protocol;
-        resultText = `Ранг матриці: ${rank}`;
+        let { rank, protocol, error } = calculateRank(A);
+        if (error) {
+            resultText = error;
+            protocolText = "";
+        } else {
+            protocolText = protocol;
+            resultText = `Ранг матриці: ${rank}`;
+        }
     } else if (operation === "solve") {
-        const B = getVectorB();
-        let { solution, protocol } = solveSystem(A, B);
-        protocolText = protocol;
-        resultText = solution ? `Розв’язок X: ${solution.join(" ")}` : "Система не має єдиного розв’язку.";
+        let { solution, protocol, error } = solveSystem(A, B);
+        if (error) {
+            resultText = error;
+            protocolText = "";
+        } else {
+            protocolText = protocol;
+            resultText = solution ? `Розв’язок X: ${solution.join(" ")}` : "Система не має єдиного розв’язку.";
+        }
     }
 
     document.getElementById("resultOutput").textContent = resultText;
