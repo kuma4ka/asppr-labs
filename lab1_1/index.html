@@ -2,56 +2,72 @@
 <html lang="uk">
 <head>
   <meta charset="UTF-8">
-  <title>Калькулятор матриць – Варіант 20</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Операції з матрицями (Гаус-Жордан)</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<h1>Калькулятор матриць – Варіант 20</h1>
 
-<div id="controls">
-  <div class="matrix-operations">
-    <label for="operation">Оберіть операцію:</label>
-    <select id="operation">
-      <option value="inverse">Знайти обернену матрицю</option>
-      <option value="rank">Обчислити ранг матриці</option>
-      <option value="solve">Розв'язати систему (AX = B)</option>
-    </select>
-  </div>
-  <div class="matrix-options">
-    <label for="rows">Рядки:</label>
-    <input type="number" id="rows" min="1" value="3">
-    <label for="cols">Стовпці:</label>
-    <input type="number" id="cols" min="1" value="3">
-  </div>
-  <div class="buttons">
-    <button id="generateMatrix">Згенерувати матрицю</button>
-    <button id="generateVariantMatrix">Матриця за варіантом</button>
-    <button id="calculate">Обчислити</button>
-  </div>
-</div>
+<h1>Операції з матрицями (Метод Гауса-Жордана)</h1>
 
-<div id="inputArea">
-  <div class="vectorASection">
-    <h2>Матриця A:</h2>
-    <div id="matrixA"></div>
-  </div>
-  <div id="vectorBSection" style="display: none;">
-    <h2>Вектор B:</h2>
-    <div id="vectorB"></div>
-  </div>
-</div>
+<section id="input-section">
+  <h2>Введення даних</h2>
 
-<div id="results">
-  <div class="result">
-    <h2>Результат:</h2>
-    <pre id="resultOutput"></pre>
+  <div class="matrix-size">
+    <label for="rowsA">Рядки A:</label>
+    <input type="number" id="rowsA" value="3" min="1">
+    <label for="colsA">Стовпці A:</label>
+    <input type="number" id="colsA" value="3" min="1">
+    <button id="fillVariantBtn" class="variant-button" title="Заповнити даними: A=[[-1, 3, -2], [3, -1, 3], [1, 2, -3]], B=[3, 4, 2]">Заповнити за варіантом</button>
+    <button id="fillRandomBtn" class="variant-button" title="Заповнити випадковими цілими числами від -9 до 9">Заповнити випадково</button>
   </div>
-  <div class="protocol">
-    <h2>Протокол обчислень:</h2>
-    <pre id="protocolOutput"></pre>
-  </div>
-</div>
 
-<script type="module" src="./js/script.js"></script>
+  <div class="matrix-container">
+    <div class="matrix-input">
+      <h3>Матриця A</h3>
+      <div id="matrixA-input" class="matrix-grid">
+      </div>
+    </div>
+
+    <div class="vector-input">
+      <h3>Вектор B (для СЛАР)</h3>
+      <div id="vectorB-input" class="vector-grid">
+      </div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button id="calcInverseBtn">1. Знайти обернену A⁻¹</button>
+    <button id="calcRankBtn">2. Обчислити ранг A</button>
+    <button id="solveSLEBtn">3. Розв’язки СЛАР 1-м методом</button>
+  </div>
+</section>
+
+<section id="output-section">
+  <h2>Результати</h2>
+  <div id="message-area" class="message"></div>
+  <div class="results-container">
+    <div class="result-box">
+      <h3>Обернена матриця A⁻¹:</h3>
+      <div id="inverse-output" class="matrix-grid result-matrix"></div>
+    </div>
+    <div class="result-box">
+      <h3>Ранг матриці A:</h3>
+      <div id="rank-output" class="result-scalar"></div>
+    </div>
+    <div class="result-box">
+      <h3>Розв'язок СЛАР (x):</h3>
+      <div id="solution-output" class="vector-grid result-vector"></div>
+    </div>
+  </div>
+</section>
+
+<section id="protocol-section">
+  <h2>Протокол обчислень</h2>
+  <pre id="protocol-output" class="protocol-box"></pre>
+</section>
+
+<script src="js/main.js" type="module"></script>
+
 </body>
 </html>
