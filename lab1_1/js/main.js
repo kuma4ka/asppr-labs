@@ -19,7 +19,6 @@ function fillWithRandomData() {
             return;
         }
 
-        // Fill matrix A
         for (let i = 0; i < rows; i++) {
             for (let j = 0; j < cols; j++) {
                 const input = document.getElementById(`A_${i}_${j}`);
@@ -29,7 +28,6 @@ function fillWithRandomData() {
             }
         }
 
-        // Fill vector B
         for (let i = 0; i < rows; i++) {
             const inputB = document.getElementById(`B_${i}`);
             if (inputB) {
@@ -44,7 +42,6 @@ function fillWithRandomData() {
         DOM.setMessage("Сталася помилка при заповненні випадковими даними.", "error");
     }
 }
-
 
 function fillWithVariantData() {
     const variantA = [
@@ -145,7 +142,56 @@ function handleSolve() {
         return;
     }
 
+    const isBZero = vectorB.every(val => val === 0);
+    if (isBZero) {
+        const msg = "Помилка: Вектор B не може складатися тільки з нулів.";
+        DOM.setMessage(msg, "error");
+        if (protocolElement) protocolElement.textContent = msg;
+        return;
+    }
+
+
     const resultData = GaussJordan.solveLinearSystem(matrixA, vectorB, DOM.setMessage);
+    if (protocolElement) protocolElement.textContent = resultData.protocol;
+    if (resultData.result) {
+        DOM.displayVector(resultData.result, DOM.elements.solutionOutput);
+    } else {
+        if (DOM.elements.solutionOutput) {
+            DOM.elements.solutionOutput.innerHTML = '';
+            DOM.elements.solutionOutput.style.gridTemplateColumns = '1fr';
+        }
+    }
+}
+
+function handleSolveInverse() {
+    DOM.clearResultsAndProtocol();
+    const rows = parseInt(DOM.elements.rowsAInput?.value || '0');
+    const cols = parseInt(DOM.elements.colsAInput?.value || '0');
+    const protocolElement = DOM.elements.protocolOutput;
+
+    if (rows !== cols || rows < 1) {
+        const msg = "Помилка: Матриця A повинна бути квадратною та не порожньою.";
+        DOM.setMessage(msg, "error");
+        if (protocolElement) protocolElement.textContent = msg;
+        return;
+    }
+    const matrixA = DOM.readMatrix(rows, cols, 'A');
+    const vectorB = DOM.readVector(rows, 'B');
+    if (!matrixA || !vectorB) {
+        if (protocolElement) protocolElement.textContent = DOM.elements.messageArea?.textContent || 'Помилка зчитування матриці A або вектора B.';
+        return;
+    }
+
+    const isBZero = vectorB.every(val => val === 0);
+    if (isBZero) {
+        const msg = "Помилка: Вектор B не може складатися тільки з нулів.";
+        DOM.setMessage(msg, "error");
+        if (protocolElement) protocolElement.textContent = msg;
+        return;
+    }
+
+    const resultData = GaussJordan.solveUsingInverse(matrixA, vectorB, DOM.setMessage);
+
     if (protocolElement) protocolElement.textContent = resultData.protocol;
     if (resultData.result) {
         DOM.displayVector(resultData.result, DOM.elements.solutionOutput);
@@ -182,6 +228,10 @@ function initialize() {
     }
     if (DOM.elements.solveSLEBtn) {
         DOM.elements.solveSLEBtn.addEventListener('click', handleSolve);
+    }
+    const solveInverseBtn = document.getElementById('solveInverseBtn');
+    if (solveInverseBtn) {
+        solveInverseBtn.addEventListener('click', handleSolveInverse);
     }
 
     DOM.updateInputs();
