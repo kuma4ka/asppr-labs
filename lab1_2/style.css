@@ -1,0 +1,289 @@
+/* General Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 20px;
+    background-color: #f4f7f6;
+    color: #333;
+    font-size: 15px;
+}
+
+h1, h2, h3 {
+    color: #2c3e50;
+    margin-bottom: 0.8em;
+}
+h1 {
+    text-align: center;
+    margin-bottom: 1.2em;
+    color: #1a5276;
+}
+h2 {
+    border-bottom: 2px solid #aed6f1;
+    padding-bottom: 5px;
+    margin-top: 1.5em;
+}
+h3 {
+    color: #1a5276;
+    margin-top: 1em;
+    margin-bottom: 0.6em;
+}
+
+/* Sections */
+.input-section, .output-section {
+    margin-top: 25px;
+    padding: 20px 25px;
+    border: 1px solid #d6eaf8;
+    border-radius: 8px;
+    background-color: #ffffff;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* Input Groups & Forms */
+.input-group {
+    margin-bottom: 18px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+}
+
+.input-group label {
+    font-weight: 600;
+    color: #566573;
+    min-width: 150px;
+    flex-shrink: 0;
+}
+
+.input-group input[type="number"],
+.input-group select {
+    padding: 8px 10px;
+    border: 1px solid #bdc3c7;
+    border-radius: 4px;
+    font-size: 15px;
+    transition: border-color 0.2s ease-in-out;
+}
+.input-group input[type="number"]:focus,
+.input-group select:focus {
+    border-color: #3498db;
+    outline: none;
+}
+
+.input-group input[type="number"] {
+    max-width: 90px;
+}
+
+.coeffs-container {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 8px 6px;
+    align-items: center;
+    padding: 5px 0;
+}
+.coeffs-container span {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
+}
+.coeffs-container span span {
+    color: #555;
+    margin-right: 4px;
+}
+
+input.coeff-input {
+    max-width: 65px;
+    text-align: right;
+}
+
+/* Constraints Styling */
+#constraintsContainer {
+    margin-top: 15px;
+    border-left: 3px solid #aed6f1;
+    padding-left: 15px;
+}
+
+.constraint-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 12px;
+    border: 1px solid #eaf2f8;
+    padding: 12px;
+    background-color: #fdfefe;
+    border-radius: 5px;
+    transition: box-shadow 0.2s ease;
+}
+.constraint-row:hover {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
+}
+
+.constraint-row .coeffs-container {
+    flex-grow: 1;
+    min-width: 200px;
+}
+.constraint-row select, .constraint-row input[type="number"]:not(.coeff-input) {
+    max-width: 60px;
+}
+.constraint-row input[type="number"]:not(.coeff-input) {
+    text-align: right;
+}
+
+/* Buttons */
+button {
+    padding: 9px 18px;
+    font-size: 15px;
+    cursor: pointer;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    margin-right: 8px;
+}
+button:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+button:active {
+    transform: translateY(0px);
+}
+
+#setupVarsButton, #addConstraintButton {
+    background-color: #5dade2;
+}
+#solveButton {
+    background-color: #2ecc71;
+    font-weight: bold;
+}
+#loadExample1Button, #loadExample2Button{
+    background-color: #f39c12;
+}
+#loadVariant20Button {
+    background-color: #748c2d;
+}
+button.remove-constraint {
+    background-color: #e74c3c;
+    padding: 6px 10px;
+    font-size: 13px;
+    margin-left: auto;
+}
+
+/* Output & Protocol */
+#protocolOutput {
+    font-family: 'Consolas', 'Courier New', Courier, monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    background-color: #f8f9f9;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    padding: 15px;
+    margin-top: 15px;
+    max-height: 70vh;
+    overflow-y: auto;
+    color: #444;
+}
+#protocolOutput h3, #protocolOutput h4 {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #2c3e50;
+    margin-top: 1.5em;
+    margin-bottom: 0.6em;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 4px;
+}
+#protocolOutput p {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 8px 0;
+    color: #555;
+}
+#protocolOutput p b {
+    color: #333;
+}
+#protocolOutput ul, #protocolOutput ol {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin-left: 20px;
+    padding-left: 15px;
+}
+#protocolOutput li {
+    margin-bottom: 5px;
+}
+
+#protocolOutput table {
+    border-collapse: collapse;
+    margin-top: 8px;
+    margin-bottom: 18px;
+    width: auto;
+    box-shadow: none;
+    font-size: 14px;
+    background-color: #fff;
+}
+#protocolOutput th, #protocolOutput td {
+    border: 1px solid #d5dbdb;
+    padding: 6px 9px;
+    text-align: center;
+}
+#protocolOutput th {
+    background-color: #e5e8e8;
+    font-weight: 600;
+    color: #515a5a;
+}
+#protocolOutput td.header-col {
+    font-weight: 600;
+    background-color: #f2f4f4;
+    text-align: right;
+    color: #515a5a;
+}
+#protocolOutput .highlight-pivot {
+    background-color: #fdebd0 !important;
+    font-weight: bold;
+    color: #b9770e;
+    outline: 1px solid #f5b041;
+}
+#protocolOutput .highlight-row td, #protocolOutput .highlight-row th {
+    background-color: #eaf2f8;
+}
+#protocolOutput .highlight-col td, #protocolOutput .highlight-col th {
+    background-color: #feefc3;
+}
+
+#finalResult {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #e8f8f5;
+    border: 1px solid #a3e4d7;
+    border-left: 5px solid #1abc9c;
+    border-radius: 5px;
+}
+#finalResult pre {
+    background-color: #fdfefe;
+    border: 1px solid #d1f2eb;
+    padding: 12px;
+    border-radius: 4px;
+    font-family: 'Consolas', 'Courier New', monospace;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-size: 15px;
+    color: #145a32;
+}
+#finalResult .success-message {
+    color: #148f77;
+    font-weight: bold;
+    font-size: 1.1em;
+    margin-bottom: 10px;
+}
+.error-message {
+    color: #c0392b;
+    font-weight: bold;
+    border: 1px solid #f5b7b1;
+    padding: 12px;
+    margin-top: 15px;
+    background-color: #fdedec;
+    border-radius: 4px;
+}
+hr {
+    border: none;
+    border-top: 1px solid #e0e0e0;
+    margin: 25px 0;
+}

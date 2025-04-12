@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Розв'язання ЗЛП методом МЖВ (Динамічний)</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<h1>Розв'язання Задачі Лінійного Програмування (МЖВ)</h1>
+
+<div class="input-section">
+  <h2>Введення Даних Задачі</h2>
+
+  <div class="input-group">
+    <label for="numVars">Кількість змінних (x₁, x₂, ...):</label>
+    <input type="number" id="numVars" value="4" min="1" step="1">
+    <button id="setupVarsButton">Налаштувати Поля</button>
+  </div>
+
+  <div id="objectiveFunction" class="input-group objective">
+    <label>Цільова функція Z =</label>
+    <div id="objCoeffsContainer" class="coeffs-container">
+    </div>
+    <select id="objectiveType">
+      <option value="max" selected>→ max</option>
+      <option value="min">→ min</option>
+    </select>
+  </div>
+
+  <h3>Обмеження:</h3>
+  <div id="constraintsContainer">
+  </div>
+  <button id="addConstraintButton">Додати Обмеження</button>
+
+  <hr>
+  <div class="action-buttons">
+    <button id="solveButton">Розв'язати</button>
+    <button id="loadExample1Button">Завантажити Приклад 1</button>
+    <button id="loadExample2Button">Завантажити Приклад 2</button>
+    <button id="loadVariant20Button">Варіант 20</button>
+  </div>
+
+</div>
+
+
+<div id="output" class="output-section">
+  <h2>Протокол Обчислень:</h2>
+  <div id="protocolOutput">
+  </div>
+  <h2>Результат:</h2>
+  <div id="finalResult">
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
