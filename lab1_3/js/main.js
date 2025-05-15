@@ -6,7 +6,7 @@ import {
     getProtocolHTML,
     logToProtocol
 } from './protocolGenerator.js';
-import { runFullSimplexAlgorithm } from './simplexLogic.js';
+import { runFullSimplexAlgorithm } from './simplexLogic/simplexController.js';
 import {
     clearOutputDisplays,
     displayCalculationProtocol,
