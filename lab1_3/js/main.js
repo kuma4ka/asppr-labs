@@ -1,25 +1,18 @@
 import { getInputData } from './inputParser.js';
-import {
-    initializeProtocol,
-    logProblemStatement,
-    getProtocolTextForDownload,
-    getProtocolHTML,
-    logToProtocol
-} from './protocolGenerator.js';
+import { initializeProtocol, logProblemStatement, getProtocolTextForDownload, getProtocolHTML } from './protocolGenerator.js';
 import { runFullSimplexAlgorithm } from './simplexLogic/simplexController.js';
+import { getDOMElement } from './ui/domElements.js';
+import { addConstraintRowToDOM, setInputValues } from './ui/inputFormManager.js';
 import {
     clearOutputDisplays,
     displayCalculationProtocol,
     displayFinalSolution,
-    addConstraintRowToDOM,
-    getDOMElement,
-    setInputValues,
     displayInitialTableauSummary,
     displayZeroRowSummary,
     displayBasicFeasibleSolutionSummary,
     displayOptimizationSummary,
     setupDownloadButton
-} from './domUpdater.js';
+} from './ui/outputDisplayManager.js';
 
 function generateRandomProblemData() {
     const numVariables = Math.floor(Math.random() * 3) + 2;
@@ -60,11 +53,11 @@ function generateRandomProblemData() {
                 constraintRaw += `${Math.abs(coeff)}x${j + 1}`;
             }
         }
-        if (constraintRaw === "") constraintRaw = "0x1"; // Забезпечити хоча б одну змінну
+        if (constraintRaw === "") constraintRaw = "0x1";
 
         const type = constraintTypes[Math.floor(Math.random() * constraintTypes.length)];
         let rhs = Math.floor(Math.random() * 21);
-        if (type === "ge" && Math.random() < 0.3) { // Іноді робимо RHS від'ємним для >= для тестування
+        if (type === "ge" && Math.random() < 0.3) {
             rhs = -Math.floor(Math.random() * 5) -1;
         }
 
@@ -80,6 +73,7 @@ function generateRandomProblemData() {
         numVariables: numVariables
     };
 }
+
 
 document.addEventListener('DOMContentLoaded', () => {
     const addConstraintButton = getDOMElement('add-constraint');
@@ -144,16 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             logProblemStatement(inputData);
 
-            let result;
-            try {
-                result = runFullSimplexAlgorithm(inputData);
-            } catch (e) {
-                console.error("Сталася помилка під час виконання симплекс-методу:", e);
-                logToProtocol(`\nКРИТИЧНА ПОМИЛКА під час обчислень: ${e.message}\n${e.stack || ''}`, 'text');
-                displayCalculationProtocol(getProtocolHTML());
-                alert("Під час обчислень сталася критична помилка. Перевірте консоль для деталей.");
-                return;
-            }
+            const result = runFullSimplexAlgorithm(inputData);
 
             if(result.initialTableauForSummary) {
                 displayInitialTableauSummary(result.initialTableauForSummary);
