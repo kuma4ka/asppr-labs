@@ -1,54 +1,4 @@
-let protocolLogStore = [];
-
-export function initializeProtocol() {
-    protocolLogStore = [];
-    logToProtocol("Згенерований протокол обчислення:", 'text');
-}
-
-export function logToProtocol(content, type = 'text') {
-    protocolLogStore.push({ type, content });
-}
-
-export function getProtocolTextForDownload() {
-    return protocolLogStore.map(item => {
-        if (item.type === 'htmlTable') {
-            const tableElement = document.createElement('div');
-            tableElement.innerHTML = item.content;
-            let textTable = "";
-            const title = tableElement.querySelector('h4');
-            if (title) textTable += title.textContent + "\n";
-
-            const table = tableElement.querySelector('table');
-            if (table) {
-                const headers = Array.from(table.querySelectorAll('th')).map(th => th.textContent.padEnd(12)).join('');
-                textTable += headers + "\n";
-                textTable += "-".repeat(headers.length) + "\n";
-                Array.from(table.querySelectorAll('tr')).forEach(tr => {
-                    if (tr.querySelectorAll('th').length > 0) return;
-                    const cells = Array.from(tr.querySelectorAll('td')).map(td => td.textContent.padEnd(12)).join('');
-                    textTable += cells + "\n";
-                });
-            } else {
-                textTable = item.content;
-            }
-            return textTable;
-        }
-        return item.content;
-    }).join('\n');
-}
-
-export function getProtocolHTML() {
-    return protocolLogStore.map(item => {
-        if (item.type === 'htmlTable') {
-            return item.content;
-        } else if (item.type === 'text') {
-            const pre = document.createElement('pre');
-            pre.textContent = item.content;
-            return pre.outerHTML;
-        }
-        return `<p>${item.content}</p>`;
-    }).join('');
-}
+import { logToProtocol } from './protocolManager.js';
 
 function formatVariableProtocol(coeff, varIndex, isFirst) {
     if (Math.abs(coeff) < 1e-9) return "";
@@ -133,19 +83,20 @@ export function formatTableauAsHTML(tableau, columnHeaders, rowHeaders, title = 
 
     let html = "";
     if (title) {
-        html += `<h4>${title}</h4>`;
+        html += `<h4>${title.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</h4>`; // Екрануємо title
     }
     html += '<table class="simplex-protocol-table">';
     html += '<thead><tr><th></th>';
     columnHeaders.forEach(name => {
-        html += `<th>${name}</th>`;
+        html += `<th>${name.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</th>`;
     });
     html += '</tr></thead><tbody>';
 
     tableau.forEach((row, rowIndex) => {
-        html += `<tr><td>${rowHeaders[rowIndex] || `Ряд ${rowIndex}`}</td>`;
+        const rowHeader = (rowHeaders[rowIndex] || `Ряд ${rowIndex}`).replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        html += `<tr><td>${rowHeader}</td>`;
         row.forEach(val => {
-            html += `<td>${val.toFixed(2)}</td>`;
+            html += `<td>${Number(val).toFixed(2)}</td>`; // Переконуємось, що val є числом
         });
         html += '</tr>';
     });

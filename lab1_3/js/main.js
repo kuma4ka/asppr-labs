@@ -1,5 +1,6 @@
 import { getInputData } from './inputParser.js';
-import { initializeProtocol, logProblemStatement, getProtocolTextForDownload, getProtocolHTML } from './protocolGenerator.js';
+import { initializeProtocol, getProtocolTextForDownload, getProtocolHTML } from './protocol/protocolManager.js';
+import { logProblemStatement } from './protocol/protocolFormatters.js';
 import { runFullSimplexAlgorithm } from './simplexLogic/simplexController.js';
 import { getDOMElement } from './ui/domElements.js';
 import { addConstraintRowToDOM, setInputValues } from './ui/inputFormManager.js';
@@ -73,7 +74,6 @@ function generateRandomProblemData() {
         numVariables: numVariables
     };
 }
-
 
 document.addEventListener('DOMContentLoaded', () => {
     const addConstraintButton = getDOMElement('add-constraint');
@@ -156,7 +156,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const protocolHTMLContent = getProtocolHTML();
                 const tempDiv = document.createElement('div');
                 tempDiv.innerHTML = protocolHTMLContent;
-                const bfsLogElements = Array.from(tempDiv.querySelectorAll('pre, p')).filter(el => el.textContent.includes("Опорний розв'язок (після Фази I): X ="));
+                const bfsLogElements = Array.from(tempDiv.querySelectorAll('pre')).filter(el => el.textContent.includes("Опорний розв'язок (після Фази I): X ="));
                 if (bfsLogElements.length > 0) {
                     const bfsMatch = bfsLogElements[bfsLogElements.length-1].textContent.match(/X = \(([^)]+)\)/);
                     if (bfsMatch && bfsMatch[1]) {

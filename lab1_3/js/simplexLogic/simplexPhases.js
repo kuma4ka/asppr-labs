@@ -1,4 +1,5 @@
-import { logToProtocol, logTableau } from '../protocolGenerator.js';
+import { logToProtocol } from '../protocol/protocolManager.js';
+import { logTableau } from '../protocol/protocolFormatters.js';
 import { performMJE, extractSolution, deepCopyTableau } from './tableauOperations.js';
 
 const EPSILON = 1e-9;

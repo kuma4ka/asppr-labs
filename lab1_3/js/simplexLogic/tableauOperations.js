@@ -1,4 +1,4 @@
-import { logToProtocol } from '../protocolGenerator.js';
+import { logToProtocol } from '../protocol/protocolManager.js';
 
 const EPSILON = 1e-9;
 let moduleOriginalNumDecisionVariablesForOps = 0;

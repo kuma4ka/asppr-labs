@@ -1,4 +1,5 @@
-import { logToProtocol, logTableau, formatTableauAsHTML } from '../protocolGenerator.js'; // Шлях на рівень вище
+import { logToProtocol } from '../protocol/protocolManager.js';
+import { logTableau, formatTableauAsHTML as formatTableauAsHTML_protocol } from '../protocol/protocolFormatters.js'; // <--- ВИПРАВЛЕНО/ДОДАНО
 import {
     initializeTableauStructure,
     populateConstraintRows,
@@ -40,7 +41,7 @@ export function runFullSimplexAlgorithm(inputData, getInitialStateOnly = false) 
                 optimalSolution: "Error during 0-row removal",
                 optimalZ: "Error",
                 finalTableau: zeroRowResultState.tableau,
-                initialTableauForSummary: formatTableauAsHTML(initialTableauState.tableau, initialTableauState.variableNames, initialTableauState.basisHeaders),
+                initialTableauForSummary: formatTableauAsHTML_protocol(initialTableauState.tableau, initialTableauState.variableNames, initialTableauState.basisHeaders),
                 zeroRowSummary: "Помилка під час видалення 0-рядків.",
                 basicFeasibleSolutionSummary: null,
                 optimizationSummary: null
@@ -53,7 +54,7 @@ export function runFullSimplexAlgorithm(inputData, getInitialStateOnly = false) 
                 optimalSolution: supportSolResultState.feasible ? "Error" : "Infeasible (Фаза I)",
                 optimalZ: supportSolResultState.feasible ? "Error" : "Infeasible (Фаза I)",
                 finalTableau: supportSolResultState.tableau,
-                initialTableauForSummary: formatTableauAsHTML(initialTableauState.tableau, initialTableauState.variableNames, initialTableauState.basisHeaders),
+                initialTableauForSummary: formatTableauAsHTML_protocol(initialTableauState.tableau, initialTableauState.variableNames, initialTableauState.basisHeaders),
                 zeroRowSummary: zeroRowSummaryText,
                 basicFeasibleSolutionSummary: supportSolResultState.basicFeasibleSolutionForSummary || "Н/Д",
                 optimizationSummary: null
@@ -65,7 +66,7 @@ export function runFullSimplexAlgorithm(inputData, getInitialStateOnly = false) 
             optimalSolution: optResultState.optimalSolution,
             optimalZ: optResultState.optimalZ,
             finalTableau: optResultState.tableau,
-            initialTableauForSummary: formatTableauAsHTML(initialTableauState.tableau, initialTableauState.variableNames, initialTableauState.basisHeaders),
+            initialTableauForSummary: formatTableauAsHTML_protocol(initialTableauState.tableau, initialTableauState.variableNames, initialTableauState.basisHeaders),
             zeroRowSummary: zeroRowSummaryText,
             basicFeasibleSolutionSummary: supportSolResultState.basicFeasibleSolutionForSummary,
             optimizationSummary: optResultState.optimizationSummary || "Етап оптимізації завершено (деталі в протоколі)."
