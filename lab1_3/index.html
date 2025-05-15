@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Розв'язувач Симплекс-методом</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<h1>Симплекс-метод для Лінійного Програмування</h1>
+
+<div class="input-section">
+    <h2>1. Вхідні Дані</h2>
+    <div>
+        <button id="fill-variant-20" style="margin-bottom: 10px; background-color: #28a745;">Заповнити Варіант 20</button>
+        <button id="fill-random-data" style="margin-bottom: 10px; background-color: #17a2b8;">Заповнити Випадковими Даними</button>
+    </div>
+    <div>
+        <label for="objective-function">Цільова Функція (напр., 3x1 - x3 + x5):</label>
+        <input type="text" id="objective-function" placeholder="напр., 3x1 - 1x3 + 1x5">
+        <select id="objective-type">
+            <option value="minimize">Мінімізувати</option>
+            <option value="maximize">Максимізувати</option>
+        </select>
+    </div>
+
+    <div id="constraints-area">
+        <h3>Обмеження:</h3>
+        <div class="constraint">
+            <input type="text" class="constraint-eq" placeholder="напр., -1x1 + 3x3 - 2x4 + 1x5">
+            <select class="constraint-type">
+                <option value="eq">=</option>
+                <option value="le"><=</option>
+                <option value="ge">>=</option>
+            </select>
+            <input type="number" class="constraint-rhs" placeholder="Прав. частина (напр., 3)">
+        </div>
+    </div>
+    <button id="add-constraint">Додати Обмеження</button>
+    <br><br>
+    <div>
+        <label for="num-variables">Кількість Змінних (напр., від x1 до x5 означає 5):</label>
+        <input type="number" id="num-variables" value="3" min="2" max="5">
+    </div>
+    <p><small>Припускаємо, що всі змінні x_j >= 0</small></p>
+</div>
+
+<div class="action-section">
+    <button id="start-simplex">Розв'язати Задачу</button>
+</div>
+
+<div class="output-section">
+    <h2>2. Початкова Симплекс-таблиця</h2>
+    <div id="initial-table-display"></div>
+
+    <h2>3. Кроки Видалення 0-рядків (якщо є)</h2>
+    <div id="zero-row-protocol-summary"></div>
+
+    <h2>4. Опорний Розв'язок</h2>
+    <div id="basic-feasible-solution-summary"></div>
+
+    <h2>5. Кроки Пошуку Оптимального Розв'язку</h2>
+    <div id="optimization-protocol-summary"></div>
+
+    <h2>6. Оптимальний Розв'язок</h2>
+    <div id="optimal-solution-display"></div>
+    <div id="optimal-z-display"></div>
+
+    <h2>Протокол Обчислення (Детально)</h2>
+    <div id="calculation-protocol-display" style="white-space: pre; font-family: monospace; background-color: #f0f0f0; padding: 10px; border: 1px solid #ccc; min-height: 100px; overflow-x: auto;"></div>
+    <div id="download-protocol-container" style="margin-top: 10px; display: none;">
+        <button id="download-protocol-button">Завантажити Протокол (.txt)</button>
+    </div>
+</div>
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>
