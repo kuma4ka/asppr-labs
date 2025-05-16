@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Розв'язання ЗЛП та Двоїста Задача (МЖВ)</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<h1>Розв'язання Задачі Лінійного Програмування (МЖВ) та Двоїста Задача</h1>
+
+<div class="input-section">
+  <h2>Введення Даних Прямої Задачі (Z)</h2>
+  <div class="input-group">
+    <label for="numVars">Кількість змінних (X1, X2, ...):</label>
+    <input type="number" id="numVars" value="2" min="1" step="1">
+    <button id="setupVarsButton">Налаштувати Поля</button>
+  </div>
+
+  <div id="objectiveFunction" class="input-group objective">
+    <label>Цільова функція Z =</label>
+    <div id="objCoeffsContainer" class="coeffs-container">
+    </div>
+    <select id="objectiveType">
+      <option value="max" selected>&rarr; max</option>
+      <option value="min">&rarr; min</option>
+    </select>
+  </div>
+
+  <h3>Обмеження:</h3>
+  <div id="constraintsContainer">
+  </div>
+  <button id="addConstraintButton">Додати Обмеження</button>
+  <hr>
+  <div class="action-buttons">
+    <button id="solveButton">Розв'язати Пряму Задачу (Z)</button>
+    <button id="buildDualButton">Побудувати Двоїсту Задачу (W)</button>
+  </div>
+  <div class="action-buttons example-buttons">
+    <button id="loadExample1Button">Завантажити Приклад 1 (з PDF)</button>
+    <button id="loadExample2Button">Завантажити Приклад 2 (з PDF)</button>
+    <button id="loadVariant20Button">Варіант 20 (рівність &rarr; нерівності)</button>
+  </div>
+</div>
+
+<div id="output" class="output-section">
+  <h2>Протокол Обчислень:</h2>
+  <div id="protocolOutput">
+  </div>
+  <div id="finalResult" class="hidden-effectively">
+  </div>
+</div>
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>
