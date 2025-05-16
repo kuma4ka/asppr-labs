@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Розв'язання ЗЛП та ЦЛП (МЖВ + Гоморі)</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<h1>Розв'язання Задачі Лінійного та Цілочислового Програмування</h1>
+
+<div class="input-section">
+  <h2>Введення Даних Задачі</h2>
+  <div class="input-group">
+    <label for="numVars">Кількість змінних (X1, X2, ...):</label>
+    <input type="number" id="numVars" value="2" min="1" step="1">
+    <button id="setupVarsButton">Налаштувати Поля</button>
+    <div class="gomory-checkbox-group">
+      <input type="checkbox" id="solveInteger">
+      <label for="solveInteger">Цілочисловий розв'язок (Гоморі)</label>
+    </div>
+  </div>
+
+  <div id="objectiveFunction" class="input-group objective">
+    <label>Цільова функція Z =</label>
+    <div id="objCoeffsContainer" class="coeffs-container">
+    </div>
+    <select id="objectiveType">
+      <option value="max" selected>&rarr; max</option>
+      <option value="min">&rarr; min</option>
+    </select>
+  </div>
+
+  <h3>Обмеження:</h3>
+  <div id="constraintsContainer">
+  </div>
+  <button id="addConstraintButton">Додати Обмеження</button>
+  <hr>
+  <div class="action-buttons">
+    <button id="solveButton">Розв'язати</button>
+    <button id="loadExample1Button">Завантажити Приклад 1 (ЛП)</button>
+    <button id="loadExample2Button">Завантажити Приклад 2 (ЦЛП)</button>
+    <button id="loadExample3Button">Завантажити Приклад 3 (ЦЛП)</button>
+    <button id="loadVariant20Button">Варіант (ЛП)</button>
+  </div>
+</div>
+
+<div id="output" class="output-section">
+  <h2>Протокол Обчислень:</h2>
+  <div id="protocolOutput">
+  </div>
+  <button id="downloadProtocolButton" style="margin-top: 10px;">Завантажити протокол (txt)</button>
+  <h2>Результат:</h2>
+  <div id="finalResult">
+  </div>
+</div>
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>
