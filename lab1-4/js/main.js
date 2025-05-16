@@ -6,15 +6,19 @@ import { getElementValueAsInt } from './dom/formAccessors.js';
 import { parseInput } from './parser.js';
 import { generateInitialTableau, transformProblem } from './problemTransformer.js';
 import { ProtocolLogger } from './protocolLogger.js';
+
 import {
-    extractSolution,
     findFeasibleSolution,
     findOptimalSolution,
+    extractSolution
+} from './algorithms/simplexCore.js';
+import {
     checkIfIntegerSolution,
     findRowForGomoryCut,
     calculateGomoryCutCoefficients,
     addGomoryCutToTableau
-} from './simplexSolver.js';
+} from './algorithms/gomoryCuts.js';
+
 import { EPSILON, MAX_GOMORY_ITERATIONS } from './config.js';
 
 const numVarsInput = document.getElementById('numVars');
