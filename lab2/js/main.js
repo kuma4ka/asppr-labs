@@ -30,14 +30,22 @@ function loadExample(exampleData) {
     constraintsContainer.innerHTML = '';
     exampleData.constraints.forEach(c => domUtils.addConstraintRow(exampleData.numVars, c));
 
-    domUtils.clearOutputs(protocolOutputDiv, finalResultDiv);
-    domUtils.setResultVisibility(false); // Сховати результат при завантаженні прикладу
+    if (protocolOutputDiv) protocolOutputDiv.innerHTML = '';
+    if (finalResultDiv) {
+        finalResultDiv.innerHTML = '';
+        finalResultDiv.classList.add('hidden-effectively');
+        const outputSection = document.getElementById('output');
+        if (outputSection) {
+            const resultHeader = Array.from(outputSection.getElementsByTagName('h2')).find(h2 => h2.textContent.includes('Результат:'));
+            if(resultHeader) resultHeader.style.display = 'none';
+        }
+    }
 }
 
 function solve() {
     const logger = new ProtocolLogger('protocolOutput');
-    domUtils.clearOutputs(protocolOutputDiv, finalResultDiv); // Очистить протокол, але не приховає finalResultDiv тут
-    domUtils.setResultVisibility(false); // Спершу приховуємо результат перед початком розв'язання
+    domUtils.clearOutputs(protocolOutputDiv, finalResultDiv);
+    domUtils.setResultVisibility(false);
     logger.clear();
 
     try {
@@ -59,7 +67,6 @@ function solve() {
         if (!feasibilityResult.feasible) {
             const lastMessageElem = logger.outputDiv.querySelector('p:last-of-type') || logger.outputDiv.querySelector('pre:last-of-type');
             domUtils.displayMessage('finalResult', lastMessageElem?.textContent || 'Не вдалося знайти опорний розв\'язок.', true);
-            // setResultVisibility(true) буде викликано всередині displayMessage
             return;
         }
 
@@ -78,6 +85,7 @@ function solve() {
             problemData.objective.isMin,
             feasibilityResult.originalInitialColVars
         );
+
         logger.logFeasibleFound(currentPrimalSolutionForLog.x, dualSolutionAfterFeasibility);
 
         const optimalityResult = findOptimalSolution(
@@ -109,8 +117,7 @@ function solve() {
                 optimalityResult.originalInitialColVars
             );
 
-            logger.logOptimalFound(finalSolution.x, optimalZ, problemData.objective.isMin, finalDualSolutionU, !problemData.objective.isMin);
-            // setResultVisibility(true) буде викликано всередині displaySolution
+            logger.logOptimalFound(finalSolution.x, optimalZ, problemData.objective.isMin, finalDualSolutionU, !problemData.objective.isMin, optimalZ);
             domUtils.displaySolution(finalSolution.x, optimalZ, problemData.objective.isMin, "Оптимальний розв'язок:", 'finalResult', finalDualSolutionU, !problemData.objective.isMin, optimalZ);
         } else if (optimalityResult.unbounded) {
             const lastMessageElem = logger.outputDiv.querySelector('p:last-of-type') || logger.outputDiv.querySelector('pre:last-of-type');
@@ -122,19 +129,27 @@ function solve() {
     } catch (error) {
         console.error("Error during solving:", error);
         domUtils.displayMessage('finalResult', `Помилка: ${error.message}`, true);
-        logger.addParagraph(`<span class="error-message">Помилка під час розв'язання: ${error.message}</span>`);
+        if (logger && typeof logger.addParagraph === 'function') {
+            logger.addParagraph(`<span class="error-message">Помилка під час розв'язання: ${error.message}</span>`);
+        }
     }
 }
 
 function handleBuildDualProblem() {
     const logger = new ProtocolLogger('protocolOutput');
-    // Приховуємо секцію "Результат:", оскільки ми лише будуємо двоїсту задачу
     domUtils.setResultVisibility(false);
 
-    if (protocolOutputDiv && !protocolOutputDiv.innerHTML.trim()) {
+    let isProtocolEmpty = true;
+    if (protocolOutputDiv && protocolOutputDiv.innerHTML.trim() !== '') {
+        isProtocolEmpty = false;
+    }
+
+    if (isProtocolEmpty) {
         logger.clear();
     } else if (protocolOutputDiv) {
-        logger.addParagraph("<hr style='border-top: 2px dashed #ccc; margin: 20px 0;'>");
+        const hr = document.createElement('hr');
+        hr.className = 'protocol-divider';
+        protocolOutputDiv.appendChild(hr);
     }
 
     try {
@@ -162,12 +177,12 @@ function handleBuildDualProblem() {
 
     } catch (error) {
         console.error("Error building dual problem:", error);
-        // Показуємо помилку в секції результату, якщо вона виникає
-        domUtils.displayMessage('finalResult', `Помилка при побудові двоїстої задачі: ${error.message}`, true);
-        if(protocolOutputDiv) logger.addParagraph(`<span class="error-message">Помилка при побудові двоїстої задачі: ${error.message}</span>`);
+        if(finalResultDiv) domUtils.displayMessage('finalResult', `Помилка при побудові двоїстої задачі: ${error.message}`, true);
+        if(protocolOutputDiv && logger && typeof logger.addParagraph === 'function') {
+            logger.addParagraph(`<span class="error-message">Помилка при побудові двоїстої задачі: ${error.message}</span>`);
+        }
     }
 }
-
 
 setupVarsButton.addEventListener('click', () => {
     try {
@@ -195,10 +210,10 @@ addConstraintButton.addEventListener('click', () => {
     }
 });
 
-solveButton.addEventListener('click', solve);
+if(solveButton) solveButton.addEventListener('click', solve);
 if(buildDualButton) buildDualButton.addEventListener('click', handleBuildDualProblem);
 
-loadExample1Button.addEventListener('click', () => {
+if(loadExample1Button) loadExample1Button.addEventListener('click', () => {
     loadExample({
         numVars: 4,
         objective: { coeffs: [1, 2, -1, -1], isMin: false },
@@ -210,19 +225,22 @@ loadExample1Button.addEventListener('click', () => {
     });
 });
 
-loadExample2Button.addEventListener('click', () => {
+if(loadExample2Button) loadExample2Button.addEventListener('click', () => {
     loadExample({
         numVars: 4,
         objective: { coeffs: [10, -1, -42, -52], isMin: false },
         constraints: [
             { coeffs: [-3, 1, 4, 1], type: '<=', b: 1 },
-            { coeffs: [3, -2, 2, -2], type: '<=', b: -9 }
+            { coeffs: [3, -2, 2, -2], type: '<=', b: -9 },
+            { coeffs: [-2, 1, 1, 3], type: '<=', b: 2 },
+            { coeffs: [-2, 1, 1, 3], type: '>=', b: 2 },
+            { coeffs: [-3, 2, -3, 0], type: '<=', b: 7 },
+            { coeffs: [-3, 2, -3, 0], type: '>=', b: 7 }
         ]
     });
 });
 
-
-loadVariant20Button.addEventListener('click', () => {
+if(loadVariant20Button) loadVariant20Button.addEventListener('click', () => {
     loadExample({
         numVars: 2,
         objective: { coeffs: [2, 1], isMin: false },
@@ -248,7 +266,7 @@ document.addEventListener('DOMContentLoaded', () => {
         numVarsInput.value = 2;
         domUtils.setupInputFields(2);
     }
-    domUtils.setResultVisibility(false); // Сховати результат при першому завантаженні
+    domUtils.setResultVisibility(false);
     if (typeof loadVariant20Button !== 'undefined' && loadVariant20Button) {
         loadVariant20Button.click();
     }
